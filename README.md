@@ -106,3 +106,17 @@ still be compilable with cmake and make./
 
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+
+## Description of the model.
+The model is based from the classroom quizzes or lessons.
+1st - Calculated the state:
+x, y, psi, v, cte, epsi.
+
+2nd - Calculated the actuators:
+delta, a
+
+3rd - Updated equations:
+pred_x, pref_y, pred_psi, pred_v, pred_cte, pred_epsi.
+
+## The reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
+The time steps were from trial and error. I started from 20 and went all the way down to 10 and chose 10% for the duration of the time steps.
