@@ -94,6 +94,7 @@ int main() {
 
                 // Converts mph to m/s:
                 v *= 0.44704;
+                const double Lf = 2.67;
 
                 // Saving location of vehicle in variable:
                 int num_waypoints = ptsx.size();
@@ -124,12 +125,12 @@ int main() {
                 double latency = 0.1;
 
                 // Predicting future state with kinematic model and latency (100 milliseconds)
-                double px_t1 = v * latency;
-                double py_t1 = 0.0;
-                double psi_t1 = (v / 2.67) * (-1 * delta) * latency;
+                double px_t1 = px + v * cos(psi) * latency;
+                double py_t1 = py + v * sin(psi) * latency;
+                double psi_t1 = psi + v * delta * latency / Lf;
                 double v_t1 = v + alpha * latency;
                 double cte_t1 = cte + v * sin(epsi) * latency;
-                double epsi_t1 = epsi + (v / 2.67) * (-1 * delta) * latency;
+                double epsi_t1 = epsi + v * delta * latency / Lf;
 
                 // define the state vector (px, py, and psi are 0)
                 // state considered with 100ms of latency.

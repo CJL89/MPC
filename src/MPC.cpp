@@ -67,21 +67,21 @@ class FG_eval {
         // any anything you think may be beneficial.
         // The part of the cost based on the reference state.
         for (int t = 0; t < N; t++) {
-            fg[0] += CppAD::pow(vars[cte_start + t], 2);
-            fg[0] += CppAD::pow(vars[epsi_start + t], 2);
+            fg[0] += 200 * CppAD::pow(vars[cte_start + t], 2);
+            fg[0] += 200 * CppAD::pow(vars[epsi_start + t], 2);
             fg[0] += CppAD::pow(vars[v_start + t] - ref_vel, 2);
         }
 
         // Minimize the use of actuators.
         for (int t = 0; t < N - 1; t++) {
-            fg[0] += CppAD::pow(vars[delta_start + t], 2);
-            fg[0] += CppAD::pow(vars[a_start + t], 2);
+            fg[0] += 50 * CppAD::pow(vars[delta_start + t], 2);
+            fg[0] += 50 * CppAD::pow(vars[a_start + t], 2);
         }
 
         // Minimize the value gap between sequential actuations.
         for (int t = 0; t < N - 2; t++) {
-            fg[0] += CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-            fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+            fg[0] += 2500 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+            fg[0] += 100 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
         }
         //setup initialization & constraints
         //We initialize the model to the initial state.
