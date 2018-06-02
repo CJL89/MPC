@@ -1,7 +1,43 @@
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
----
+--------------------------------------------
+
+## Description of the model:
+The model is based from the classroom quizzes or lessons. The following variables were used:
+* x -> Coordinate position on x-plane
+* y -> Coordinate position on y-plane
+* psi -> Orientation of the vehicle
+* v -> Velocity of vehicle
+
+The actuators of the vehicle are:
+* cte -> Cross-track error
+* epsi -> Orientation error
+
+The equations to predict future values:
+* px(t+1) = px(t) + v(t) * cos(psi(t)) * dt
+* py(t+1) = py(t) + v(t) * sin(psi(t)) * dt
+* psi(t+1) = psi(t) + v(t) / Lf * deltaPsi * dt
+* v(t+1) = v(t) + a * dt;
+
+* dt is the timestep between predictions
+* Lf is the center of gravity of the vehicle, which determines its turning radius.
+
+
+## The reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
+A dt of 10 was picked from trial and error, giving the best result. Also, a 0.10 seconds in frequency seems to be work best.
+
+The initial setup was with a dt of 20, with .2 and lowered it until I reached the established dt and frequency. Speed is also a factor since a lower dt and frequency can help the car navigate better, but increasing the speed; car starts to miss the turns.
+
+## If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
+Waypoints are transformed into the vehicle's space and then fitted to a polynomial of a 3-dimensional fit.
+
+## The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
+Latency of 0.1 seconds is added between cycle of the MPC controller and the actual actuations. As a result of this:
+* increasing the velocity of the car will make the model predict the turn too late, which made the car drive off the road. In order to prevent this, the prediction range was increased and the penalty of steering was adjusted.
+
+
+--------------------------------------------------------------------------------------------------
 
 ## Dependencies
 
@@ -106,17 +142,3 @@ still be compilable with cmake and make./
 
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
-## Description of the model.
-The model is based from the classroom quizzes or lessons.
-1st - Calculated the state:
-x, y, psi, v, cte, epsi.
-
-2nd - Calculated the actuators:
-delta, a
-
-3rd - Updated equations:
-pred_x, pref_y, pred_psi, pred_v, pred_cte, pred_epsi.
-
-## The reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
-The time steps were from trial and error. I started from 20 and went all the way down to 10 and chose 10% for the duration of the time steps.
