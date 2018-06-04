@@ -25,15 +25,15 @@ The equations to predict future values:
 
 
 ## The reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
-A dt of 10 was picked from trial and error, giving the best result. Also, a 0.10 seconds in frequency seems to be work best.
+A N of 10 was picked from trial and error, giving the best result. Also, a 0.1 seconds in frequency seems to be work best.
 
-The initial setup was with a dt of 20, with .2 and lowered it until I reached the established dt and frequency. Speed is also a factor since a lower dt and frequency can help the car navigate better, but increasing the speed; car starts to miss the turns.
+The initial setup was with N of 20, with .2 and lowered it until I reached the established N and dt. Speed is also a factor since a lower N and dt can help the car navigate better, but increasing the speed; car starts to miss the turns.
 
 ## If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
 Waypoints are transformed into the vehicle's space and then fitted to a polynomial of a 3-dimensional fit.
 
 ## The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
-Latency of 0.1 seconds is added between cycle of the MPC controller and the actual actuations. As a result of this:
+Latency of 0.1 seconds is added before the cycle of the MPC controller and the actual actuations. As a result of this:
 * increasing the velocity of the car will make the model predict the turn too late, which made the car drive off the road. In order to prevent this, the prediction range was increased and the penalty of steering was adjusted.
 
 
